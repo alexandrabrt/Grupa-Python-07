@@ -29,6 +29,7 @@ class AuthUserManager(BaseUserManager):
 class AuthUser(AbstractUser):
     username = None
     email = models.EmailField(verbose_name='email', max_length=255, unique=True)
+    customer = models.ForeignKey('customers.Companies', on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -52,3 +53,12 @@ class Profile(models.Model):
             return self.avatar.url
 
         return static('images/defaultUser.jpg')
+
+
+class Timesheet(models.Model):
+    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name} {self.start_date}"

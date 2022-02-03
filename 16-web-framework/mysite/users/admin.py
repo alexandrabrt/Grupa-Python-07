@@ -7,12 +7,12 @@ from users.models import AuthUser
 @admin.register(AuthUser)
 class AdminAuthUser(BaseUserAdmin):
     ordering = ('email',)
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
-    search_fields = ('email', 'first_name', 'last_name')
+    list_display = ('email', 'first_name', 'last_name', 'is_staff', 'customer')
+    search_fields = ('email', 'first_name', 'last_name', 'customer')
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2'),
+            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2', 'customer'),
         }),
     )
     fieldsets = (
@@ -22,4 +22,5 @@ class AdminAuthUser(BaseUserAdmin):
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Customer'), {'fields': ('customer',)}),
     )

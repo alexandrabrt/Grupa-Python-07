@@ -1,11 +1,15 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, Http404, reverse
 from users.forms import RegisterForm, UserImageForm, ProfileImageForm
 from django.contrib.auth import authenticate, login, logout
 from users.email import send_register_mail
 from django.contrib.auth.decorators import login_required
-
+import datetime
 
 # Create your views here.
+from users.models import Timesheet
+
+
 def register(request):
     if request.method == 'GET':
         form = RegisterForm()
@@ -82,3 +86,15 @@ def profile_view(request):
     return render(request, 'users/profile.html', {
         'form': form
     })
+
+
+@login_required
+def new_timesheet(request):
+    Timesheet.objects.create(user_id=request.user.id, start_date=datetime.datetime.now())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def stop_timesheet(request):
+    Timesheet.objects.filter(user_id=request.user.id, end_date=None).update(end_date=datetime.datetime.now())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
