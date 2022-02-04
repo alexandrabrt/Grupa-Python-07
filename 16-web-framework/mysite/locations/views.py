@@ -21,9 +21,10 @@ class CreateLocationView(LoginRequiredMixin, CreateView):
     template_name = 'locations_form.html'
 
     def get_queryset(self):
-        location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
-        print(location_of_company)
-        return Location.objects.filter(active=True, id=location_of_company)
+        if self.request.user.customer_id:
+            location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
+            return Location.objects.filter(active=True, id=location_of_company)
+        return Location.objects.filter(active=True)
 
     def get_success_url(self):
         return reverse('locations:adauga')
@@ -35,8 +36,10 @@ class LocationsView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
-        return Location.objects.filter(active=True, id=location_of_company)
+        if self.request.user.customer_id:
+            location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
+            return Location.objects.filter(active=True, id=location_of_company)
+        return Location.objects.filter(active=True)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         data = super(LocationsView, self).get_context_data()
@@ -50,8 +53,10 @@ class UpdateLocationView(LoginRequiredMixin, UpdateView):
     template_name = 'locations_form.html'
 
     def get_queryset(self):
-        location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
-        return Location.objects.filter(active=True, id=location_of_company)
+        if self.request.user.customer_id:
+            location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
+            return Location.objects.filter(active=True, id=location_of_company)
+        return Location.objects.filter(active=True)
 
     def get_success_url(self):
         return reverse('locations:lista_locatii')
