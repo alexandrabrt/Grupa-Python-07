@@ -20,6 +20,7 @@ class CreateLocationView(LoginRequiredMixin, CreateView):
     fields = ['city', 'country'] # daca dorim sa numim doar anumite campuri pentru vizualizare
     template_name = 'locations_form.html'
 
+
     def get_queryset(self):
         if self.request.user.customer_id:
             location_of_company = Companies.objects.filter(id=self.request.user.customer.id).last().location.id
