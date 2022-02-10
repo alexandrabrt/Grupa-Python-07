@@ -25,7 +25,8 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('locations/', include('locations.urls')),
-    path('companies/', include('customers.urls'))
+    path('companies/', include('customers.urls')),
+    path('api/', include('myapi.urls')),
 ]
 
 if settings.DEBUG is True:

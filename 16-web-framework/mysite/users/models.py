@@ -30,6 +30,7 @@ class AuthUser(AbstractUser):
     username = None
     email = models.EmailField(verbose_name='email', max_length=255, unique=True)
     customer = models.ForeignKey('customers.Companies', on_delete=models.CASCADE, null=True)
+    phone_number = models.CharField(max_length=200, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

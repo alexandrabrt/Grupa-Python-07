@@ -77,7 +77,7 @@ AuthUser = get_user_model()
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'email', 'phone_number']
 
     password = forms.CharField(
         max_length=255,

@@ -44,6 +44,7 @@ class LocationsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         data = super(LocationsView, self).get_context_data()
+        data['nume'] = 'Numele meu'
         return data
 
 

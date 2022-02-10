@@ -26,5 +26,8 @@ def send_register_mail(user):
         to=[user.username],
     )
     mail.content_subtype = 'html'
-    mail.attach_file(os.path.join(settings.MEDIA_ROOT, 'images/image.jpg'))
+    try:
+        mail.attach_file(os.path.join(settings.MEDIA_ROOT, 'images/image.jpg'))
+    except FileNotFoundError:
+        pass
     mail.send()

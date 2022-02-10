@@ -91,6 +91,19 @@ def profile_view(request):
 @login_required
 def new_timesheet(request):
     Timesheet.objects.create(user_id=request.user.id, start_date=datetime.datetime.now())
+    import requests
+    import json
+
+    url = "http://127.0.0.1:8007/api/location/1/"
+
+    payload = {}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    print(response.json())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
